@@ -1,0 +1,30 @@
+{
+  "name": "ed3design-engineering-bundles",
+  "description": "Engineering-discipline library for Claude Code: 8 skills across 3 thematic bundles covering parametric CAD design, FDM/maker workflows, and embedded systems integration. Empirically validated patterns from real-world engineering practice.",
+  "owner": {
+    "name": "ed3Dworks"
+  },
+  "plugins": [
+    {
+      "name": "cad-design",
+      "description": "Parametric CAD design disciplines: 5 skills covering CAD API scripting (Fusion 360, OpenSCAD), parametric construction workflows, mechanical design principles, image-to-mesh-CAD pipelines, and Fusion 360 MCP-Bridge API quirks for Claude-driven automation.",
+      "version": "0.1.0",
+      "source": "./cad-design",
+      "author": {"name": "ed3Dworks"}
+    },
+    {
+      "name": "maker-fdm",
+      "description": "Maker disciplines for FDM-printed builds and embedded UI documentation. 2 skills covering BOM validation for multi-component builds and embedded GUI documentation from source (ESP32/Arduino with LovyanGFX, TFT_eSPI, U8g2, LVGL).",
+      "version": "0.1.0",
+      "source": "./maker-fdm",
+      "author": {"name": "ed3Dworks"}
+    },
+    {
+      "name": "embedded-systems",
+      "description": "Embedded systems integration disciplines for energy management and device onboarding. Starts with Victron Cerbo GX Modbus-TCP device onboarding (the non-obvious Enabled=0 default). Future-proofed for additional Modbus, CAN-bus, and IoT integration patterns.",
+      "version": "0.1.0",
+      "source": "./embedded-systems",
+      "author": {"name": "ed3Dworks"}
+    }
+  ]
+}

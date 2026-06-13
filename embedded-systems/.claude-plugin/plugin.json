@@ -1,0 +1,22 @@
+{
+  "name": "embedded-systems",
+  "version": "0.1.0",
+  "description": "Embedded systems integration disciplines for energy management and device onboarding. Starting with Victron Cerbo GX Modbus-TCP device onboarding (the non-obvious Enabled=0 default that hides newly connected EV chargers, energy meters, and inverters from the Cerbo UI). Future-proofed for additional Modbus, CAN-bus, and IoT integration patterns.",
+  "author": {
+    "name": "ed3Dworks"
+  },
+  "homepage": "https://github.com/Ed3Design/ed3design-engineering-bundles",
+  "repository": "https://github.com/Ed3Design/ed3design-engineering-bundles",
+  "license": "MIT",
+  "keywords": [
+    "embedded-systems",
+    "victron",
+    "cerbo-gx",
+    "modbus",
+    "venus-os",
+    "energy-management",
+    "dbus",
+    "claude-code",
+    "ed3design"
+  ]
+}

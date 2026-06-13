@@ -1,0 +1,22 @@
+{
+  "name": "cad-design",
+  "version": "0.1.0",
+  "description": "Parametric CAD design disciplines for makers, mechanical engineers, and product designers. 5 skills covering CAD API scripting (Fusion 360, OpenSCAD, commercial platforms), parametric construction workflows, mechanical design principles (overhangs, walls, tool-less assembly), image-to-mesh-CAD pipelines, and the Fusion 360 MCP-Bridge API quirks for Claude-driven CAD automation.",
+  "author": {
+    "name": "ed3Dworks"
+  },
+  "homepage": "https://github.com/Ed3Design/ed3design-engineering-bundles",
+  "repository": "https://github.com/Ed3Design/ed3design-engineering-bundles",
+  "license": "MIT",
+  "keywords": [
+    "cad",
+    "fusion-360",
+    "fusion-mcp",
+    "openscad",
+    "parametric-design",
+    "mechanical-engineering",
+    "image-to-mesh",
+    "claude-code",
+    "ed3design"
+  ]
+}
