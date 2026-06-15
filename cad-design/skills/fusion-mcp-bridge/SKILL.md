@@ -58,7 +58,7 @@ If `fusion check` fails with timeout: see *Bridge recovery protocol* below.
 
 ## Core API patterns
 
-These nine patterns cover the silent-failure modes that produced multiple wasted iterations on the Monolith 360 v3 build.
+These nine patterns cover the silent-failure modes that produced multiple wasted iterations on the a tall-cylinder speaker housing build.
 
 ### 1. Component activation before geometry operations
 
@@ -216,7 +216,7 @@ for r_world, z_world in PROFILE_WORLD:
 
 **Note**: `xYConstructionPlane` (sketch-Y maps to world-Y) and `yZConstructionPlane` (sketch-Y maps to world-Z) have *different* conventions — always verify with `worldGeometry` on the first sketch you make on a new plane.
 
-This was the root cause of the Monolith 360 v4 mesh-vs-solid 180°-X-misalignment: the silhouette spline was extracted in (R, world-Z) form and pasted into an xZ-sketch verbatim, producing a Solid with Sockel at +Z while the mesh had Sockel at -Z.
+This was the root cause of the a tall-cylinder mesh-vs-solid 180°-X-misalignment: the silhouette spline was extracted in (R, world-Z) form and pasted into an xZ-sketch verbatim, producing a Solid with Sockel at +Z while the mesh had Sockel at -Z.
 
 ### 10. Bridge timeout / lock recovery protocol
 
@@ -246,7 +246,7 @@ slopes = [(z2-z1, r2-r1, (r2-r1)/(z2-z1)) for (z1,r1),(z2,r2) in zip(pts, pts[1:
 # After the max-bulge index, dR/dz values should be monotonically decreasing
 ```
 
-For the Monolith 360 v3 build, the original spline `[(7.0,0), (7.5,1.5), (8.0,4.0), (7.4,9.0), (6.5,16), (5.8,22), (5.5,25.5)]` produced a visible concave waist between z=4 and z=9. The corrected v4 spline `[(7.0,0), (7.5,1.5), (7.7,4.0), (7.3,10.0), (6.4,18), (5.7,24), (5.5,25.5)]` is convex throughout.
+For the a tall-cylinder speaker housing build, the original spline `[(7.0,0), (7.5,1.5), (8.0,4.0), (7.4,9.0), (6.5,16), (5.8,22), (5.5,25.5)]` produced a visible concave waist between z=4 and z=9. The corrected v4 spline `[(7.0,0), (7.5,1.5), (7.7,4.0), (7.3,10.0), (6.4,18), (5.7,24), (5.5,25.5)]` is convex throughout.
 
 ## Anti-patterns (do not do)
 

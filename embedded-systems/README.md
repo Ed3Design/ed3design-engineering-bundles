@@ -24,7 +24,8 @@ The first skill in this bundle encodes one such case — Victron's Cerbo GX with
 Or manual:
 
 ```bash
-git clone https://github.com/Ed3Design/ed3design-engineering-bundles ~/.claude/plugins/
+git clone https://github.com/Ed3Design/ed3design-engineering-bundles
+ln -s "$(pwd)/ed3design-engineering-bundles/embedded-systems/skills"/* ~/.claude/skills/
 ```
 
 ## Cross-references

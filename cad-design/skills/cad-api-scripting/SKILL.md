@@ -136,3 +136,15 @@ Before delivering a script:
 - [ ] Unit convention documented
 - [ ] Tested with at least one realistic parameter set
 - [ ] Invocation command / setup instructions provided
+
+## Bundled helper tool
+
+For Fusion 360 specifically, this bundle ships a parameter-table generator:
+
+```bash
+${CLAUDE_PLUGIN_ROOT}/tools/generate_fusion360_parameters.py <parameters.json> <output.py>
+```
+
+Input is a JSON list of parameter objects (`{name, value, unit, comment}`); output is a Fusion 360 add-in script that calls `userParameters.add(...)` for each entry. Names and units are strictly validated and string fields are emitted via `repr()` so the generator is safe against malformed or hostile input.
+
+See the docstring of `generate_fusion360_parameters.py` for the full input schema.
