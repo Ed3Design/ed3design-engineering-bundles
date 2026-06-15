@@ -5,7 +5,7 @@ description: Use when a new Victron Modbus-TCP device (EV Charging Station, ener
 
 # Victron Cerbo GX — Onboarding a new Modbus-TCP device
 
-> ✅ **PROMOTED 2026-05-27**: TDD-Pressure-Test passed (RED: generic VLAN/firmware/power-cycle hypotheses without knowledge of the `Enabled=0` default; GREEN: direct 5-step sequence + `dbus-send` fix). Polish added: fallback branch when `Enabled=1` but device still invisible.
+> Pattern verified against a real Cerbo GX with a JK-BMS that remained invisible at the Modbus layer despite correct VLAN routing. The non-obvious cause is the per-port `Enabled=0` factory-default. The 5-step sequence + `dbus-send` fix is the deterministic onboarding workflow; the fallback branch covers `Enabled=1` cases where the device is still invisible.
 
 ## The non-obvious problem
 

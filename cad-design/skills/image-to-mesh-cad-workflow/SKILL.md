@@ -1,6 +1,8 @@
 ---
 name: image-to-mesh-cad-workflow
-description: End-to-end workflow for converting a 2D concept image into a parametric 3D CAD model when manual outline tracing is unreliable. Bridges the lossy "image → text-description → manual-spline-points" gap by using AI image-to-3D-mesh services (Tripo3D, Rodin, Meshy) as an intermediate step, then auditing the imported mesh for axis convention + cutout angles + sub-component inclusion before extracting the silhouette and building a parametric Loft/Revolve. Specifically applies to rotationally-symmetric parts (speakers, vases, lampshades, bottles, hubs) where the outer form is decided but accurate spline control points are unknown. Trigger on phrases like "image to 3D mesh", "Tripo3D workflow", "mesh-driven CAD", "extract spline from mesh", "extract mesh silhouette", "mesh-audit", "mesh orientation", "Y-up vs Z-up", "cutout position wrong", "main body rotated on Z axis", or any conversion-from-rendered-concept-image task. Do NOT load for normal CAD construction (use cad-construction), Fusion-API specifics (use fusion-mcp-bridge), or design exploration (use design-first-iteration). This skill assumes the fusion-mcp-bridge skill and `fusion` CLI are installed.
+description: |-
+  End-to-end workflow for converting a 2D concept image into a parametric 3D CAD model when manual outline tracing is unreliable. Bridges the lossy "image → text-description → manual-spline-points" gap by using AI image-to-3D-mesh services (Tripo3D, Rodin, Meshy) as an intermediate step, then auditing the imported mesh for axis convention + cutout angles + sub-component inclusion before extracting the silhouette and building a parametric Loft/Revolve. Specifically applies to rotationally-symmetric parts (speakers, vases, lampshades, bottles, hubs). Trigger on phrases like "image to 3D mesh", "Tripo3D workflow", "mesh-driven CAD", "extract spline from mesh", "mesh-audit", "Y-up vs Z-up", "cutout position wrong". Do NOT load for normal CAD construction (use `cad-construction`), Fusion-API specifics (use `fusion-mcp-bridge`), or design exploration (use `design-first-iteration`).
+
 ---
 
 # Image-to-Mesh CAD Workflow
@@ -482,4 +484,4 @@ Default choice: **Tripo3D** for first iteration. Switch to Rodin if topology too
 - `fusion-mcp-bridge` — bridge setup, API patterns, recovery — required dependency
 - `mechanical-design-principles` — convex-profile validation rule applies to mesh-derived splines too
 - `cad-construction` — overall CAD workflow this skill plugs into
-- `~/Documents/Claude-Code/fusion360-mcp-bridge/cli/` — `fusion mesh-import` and `fusion mesh-silhouette` CLI
+- `<your-projects>/fusion360-mcp-bridge/cli/` — `fusion mesh-import` and `fusion mesh-silhouette` CLI

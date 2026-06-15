@@ -1,6 +1,7 @@
 ---
 name: cad-api-scripting
-description: Generate and debug scripting code for CAD system APIs — Python for commercial CAD platforms, OpenSCAD language scripts, and equivalent programmatic modeling interfaces. Load this skill when the user wants to automate CAD construction, generate geometry programmatically, produce parameter-import scripts, or write reusable CAD macros. Trigger on phrases like "write me a Python script for...", "CAD macro", "OpenSCAD file", "parametric script", "API import for parameters", "script to generate geometry". Do NOT load for manual CAD construction guidance (sketch-by-sketch, feature-by-feature) — that is the cad-construction skill. Do NOT load for pure design exploration without code output — that is design-first-iteration. Complements cad-construction: construction defines WHAT to build, this skill handles HOW to build it programmatically.
+description: |-
+  Generate and debug scripting code for CAD system APIs — Python for commercial CAD platforms, OpenSCAD language scripts, and equivalent programmatic modeling interfaces. Load this skill when the user wants to automate CAD construction, generate geometry programmatically, produce parameter-import scripts, or write reusable CAD macros. Trigger on phrases like "write me a Python script for...", "CAD macro", "OpenSCAD file", "parametric script", "API import for parameters", "script to generate geometry". Do NOT load for manual CAD construction guidance (sketch-by-sketch, feature-by-feature) — that is the cad-construction skill. Do NOT load for pure design exploration without code output — that is design-first-iteration. Complements cad-construction: construction defines WHAT to build, this skill handles HOW to build it programmatically.
 ---
 
 # CAD API Scripting
