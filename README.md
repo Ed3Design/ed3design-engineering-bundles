@@ -10,11 +10,14 @@ Sibling to [`ed3design-skill-bundles`](https://github.com/Ed3Design/ed3design-sk
 
 | Bundle | Skills | Status |
 |---|---|---|
-| [`cad-design`](./cad-design/) | 5 (CAD API scripting, construction workflows, mechanical design principles, image-to-mesh, Fusion MCP-Bridge) | ✅ v0.1.0 |
-| [`maker-fdm`](./maker-fdm/) | 2 (BOM validation, embedded GUI documentation) | ✅ v0.1.0 |
-| [`embedded-systems`](./embedded-systems/) | 1 (Victron Cerbo GX Modbus onboarding — `Enabled=0` default trap) | ✅ v0.1.0 |
+| [`cad-design`](./cad-design/) | 5 (CAD API scripting, construction workflows, mechanical design principles, image-to-mesh, Fusion MCP-Bridge) | 🟡 v0.1.0 alpha |
+| [`maker-fdm`](./maker-fdm/) | 2 (BOM validation, embedded GUI documentation) | 🟡 v0.1.0 alpha |
+| [`embedded-systems`](./embedded-systems/) | 1 (Victron Cerbo GX Modbus onboarding — `Enabled=0` default trap) | 🟡 v0.1.0 alpha |
 
-**Total**: 8 skills — patterns extracted from real-world physical engineering practice and structured for reuse.
+**Total**: 8 skills + 1 helper tool — patterns extracted from real-world physical engineering practice and structured for reuse.
+
+> [!NOTE]
+> Status is `alpha` until the first signed `v0.1.0` Git tag is published. All bundles currently pass `claude plugin validate --strict` via CI on every PR, but no stable release has been cut yet. Treat the install instructions as pre-release for now.
 
 ## 🚀 Quickstart
 

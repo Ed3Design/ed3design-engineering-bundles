@@ -1,6 +1,7 @@
 ---
 name: bom-validation-workflow
-description: Use when validating a Bill of Materials (BOM) for a Maker-3D project — an embedded controller project, a speaker/audio build, a smart-home build, or any other physical build with more than 5 components. Trigger on phrases like "check the BOM", "validate the parts list", "review the parts list", "missing components", "BOM for ed3Dworks", "reconcile parts inventory", "check hardware stock", "what still needs to be ordered", "check BOM against stock", "audio build BOM", "BOM review". Do NOT load for software dependency lists (use package.json/requirements.txt tooling), for pure schematic checks without physical components, or when the project has only 1-2 components (cost/benefit ratio too low). Encodes the end-to-end-builder pattern: before ordering, check against the hardware stock; do not forget connections + consumables.
+description: |-
+  Use when validating a Bill of Materials (BOM) for a Maker-3D project — an embedded controller project, a speaker/audio build, a smart-home build, or any other physical build with more than 5 components. Trigger on phrases like "check the BOM", "validate the parts list", "review the parts list", "missing components", "BOM for ed3Dworks", "reconcile parts inventory", "check hardware stock", "what still needs to be ordered", "check BOM against stock", "audio build BOM", "BOM review". Do NOT load for software dependency lists (use package.json/requirements.txt tooling), for pure schematic checks without physical components, or when the project has only 1-2 components (cost/benefit ratio too low). Encodes the end-to-end-builder pattern: before ordering, check against the hardware stock; do not forget connections + consumables.
 ---
 
 # BOM Validation Workflow

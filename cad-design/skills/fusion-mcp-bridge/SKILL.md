@@ -1,6 +1,8 @@
 ---
 name: fusion-mcp-bridge
-description: Use when driving Fusion 360 from Claude Code through a local MCP-Bridge (HTTP server on 127.0.0.1:7654 with bearer-token auth and a single-threaded Custom-Event handler). Covers the API quirks that consistently bite without a documented protocol - component activation before geometry, single-revolve over loft+combine-join, cut-before-shell sequencing, tool-body combine-cut for complex cuts, boolean-union before cuts on multi-body components, bridge timeout/lock recovery, screenshot setup for fresh docs, and the `fusion` CLI that replaces curl boilerplate. Trigger on phrases like "Fusion 360 via MCP", "fusion-mcp-bridge", "MCP-Bridge", "Fusion-Custom-Event", "run Fusion API script", "MCP screenshot Fusion", or any mention of the `fusion` CLI command. Do NOT load for general parametric CAD discussion (use `cad-construction`), mechanical design rules (use `mechanical-design-principles`), or other CAD-API systems like OpenSCAD/FreeCAD (use `cad-api-scripting`). This skill is a thin layer of bridge-specific quirks; it depends on the bridge being installed at a known path (e.g. `~/path/to/fusion360-mcp-bridge/`) and the `fusion` CLI being installed via `pip install -e .` from `cli/`.
+description: |-
+  Use when driving Fusion 360 from Claude Code through the local MCP-Bridge (HTTP server on 127.0.0.1:7654 with bearer-token auth, single-threaded Custom-Event handler). Covers the API quirks that consistently bite without a documented protocol: component activation before geometry, single-revolve over loft+combine-join, cut-before-shell sequencing, tool-body combine-cut for complex cuts, boolean-union before cuts on multi-body components, bridge timeout/lock recovery, screenshot setup, and the `fusion` CLI that replaces curl boilerplate. Trigger on phrases like "Fusion 360 via MCP", "fusion-mcp-bridge", "Fusion Custom-Event", "run Fusion API script", or any `fusion` CLI command. Do NOT load for general parametric CAD (use `cad-construction`), mechanical-design rules (use `mechanical-design-principles`), or OpenSCAD/FreeCAD (use `cad-api-scripting`).
+
 ---
 
 # Fusion 360 via MCP-Bridge
@@ -23,7 +25,7 @@ A localhost HTTP bridge between Claude and Fusion 360, plus the small `fusion` C
 
 ## Setup
 
-The bridge is a Fusion AddIn (`~/Documents/Claude-Code/fusion360-mcp-bridge/fusion-addin/`) that exposes three HTTP endpoints on `127.0.0.1:7654`:
+The bridge is a Fusion AddIn (`<your-projects>/fusion360-mcp-bridge/fusion-addin/`) that exposes three HTTP endpoints on `127.0.0.1:7654`:
 
 - `GET /health` — bridge alive + active document info
 - `POST /execute` — body `{"script": "<python>"}` runs script in Fusion, returns `{"result": "<stdout>"}`
@@ -56,7 +58,7 @@ If `fusion check` fails with timeout: see *Bridge recovery protocol* below.
 
 ## Core API patterns
 
-These nine patterns cover the silent-failure modes that produced multiple wasted iterations on the Monolith 360 v3 build.
+These nine patterns cover the silent-failure modes that produced multiple wasted iterations on the a tall-cylinder speaker housing build.
 
 ### 1. Component activation before geometry operations
 
@@ -214,7 +216,7 @@ for r_world, z_world in PROFILE_WORLD:
 
 **Note**: `xYConstructionPlane` (sketch-Y maps to world-Y) and `yZConstructionPlane` (sketch-Y maps to world-Z) have *different* conventions — always verify with `worldGeometry` on the first sketch you make on a new plane.
 
-This was the root cause of the Monolith 360 v4 mesh-vs-solid 180°-X-misalignment: the silhouette spline was extracted in (R, world-Z) form and pasted into an xZ-sketch verbatim, producing a Solid with Sockel at +Z while the mesh had Sockel at -Z.
+This was the root cause of the a tall-cylinder mesh-vs-solid 180°-X-misalignment: the silhouette spline was extracted in (R, world-Z) form and pasted into an xZ-sketch verbatim, producing a Solid with Sockel at +Z while the mesh had Sockel at -Z.
 
 ### 10. Bridge timeout / lock recovery protocol
 
@@ -244,7 +246,7 @@ slopes = [(z2-z1, r2-r1, (r2-r1)/(z2-z1)) for (z1,r1),(z2,r2) in zip(pts, pts[1:
 # After the max-bulge index, dR/dz values should be monotonically decreasing
 ```
 
-For the Monolith 360 v3 build, the original spline `[(7.0,0), (7.5,1.5), (8.0,4.0), (7.4,9.0), (6.5,16), (5.8,22), (5.5,25.5)]` produced a visible concave waist between z=4 and z=9. The corrected v4 spline `[(7.0,0), (7.5,1.5), (7.7,4.0), (7.3,10.0), (6.4,18), (5.7,24), (5.5,25.5)]` is convex throughout.
+For the a tall-cylinder speaker housing build, the original spline `[(7.0,0), (7.5,1.5), (8.0,4.0), (7.4,9.0), (6.5,16), (5.8,22), (5.5,25.5)]` produced a visible concave waist between z=4 and z=9. The corrected v4 spline `[(7.0,0), (7.5,1.5), (7.7,4.0), (7.3,10.0), (6.4,18), (5.7,24), (5.5,25.5)]` is convex throughout.
 
 ## Anti-patterns (do not do)
 
@@ -270,8 +272,8 @@ Before declaring a Fusion-MCP build session complete:
 
 ## Related
 
-- `~/Documents/Claude-Code/fusion360-mcp-bridge/cli/` — the `fusion` CLI source + install
-- `~/Documents/Claude-Code/fusion360-mcp-bridge/fusion-addin/` — the Fusion AddIn (Python HTTP server)
+- `<your-projects>/fusion360-mcp-bridge/cli/` — the `fusion` CLI source + install
+- `<your-projects>/fusion360-mcp-bridge/fusion-addin/` — the Fusion AddIn (Python HTTP server)
 - `~/.fusion-mcp-secret` — bearer token (created by `quickstart-mac.sh`)
 - `cad-construction` — the CAD workflow this bridge operates within
 - `mechanical-design-principles` — design rules that inform the geometry being built

@@ -1,6 +1,7 @@
 ---
 name: cad-api-scripting
-description: Generate and debug scripting code for CAD system APIs — Python for commercial CAD platforms, OpenSCAD language scripts, and equivalent programmatic modeling interfaces. Load this skill when the user wants to automate CAD construction, generate geometry programmatically, produce parameter-import scripts, or write reusable CAD macros. Trigger on phrases like "write me a Python script for...", "CAD macro", "OpenSCAD file", "parametric script", "API import for parameters", "script to generate geometry". Do NOT load for manual CAD construction guidance (sketch-by-sketch, feature-by-feature) — that is the cad-construction skill. Do NOT load for pure design exploration without code output — that is design-first-iteration. Complements cad-construction: construction defines WHAT to build, this skill handles HOW to build it programmatically.
+description: |-
+  Generate and debug scripting code for CAD system APIs — Python for commercial CAD platforms, OpenSCAD language scripts, and equivalent programmatic modeling interfaces. Load this skill when the user wants to automate CAD construction, generate geometry programmatically, produce parameter-import scripts, or write reusable CAD macros. Trigger on phrases like "write me a Python script for...", "CAD macro", "OpenSCAD file", "parametric script", "API import for parameters", "script to generate geometry". Do NOT load for manual CAD construction guidance (sketch-by-sketch, feature-by-feature) — that is the cad-construction skill. Do NOT load for pure design exploration without code output — that is design-first-iteration. Complements cad-construction: construction defines WHAT to build, this skill handles HOW to build it programmatically.
 ---
 
 # CAD API Scripting
@@ -135,3 +136,15 @@ Before delivering a script:
 - [ ] Unit convention documented
 - [ ] Tested with at least one realistic parameter set
 - [ ] Invocation command / setup instructions provided
+
+## Bundled helper tool
+
+For Fusion 360 specifically, this bundle ships a parameter-table generator:
+
+```bash
+${CLAUDE_PLUGIN_ROOT}/tools/generate_fusion360_parameters.py <parameters.json> <output.py>
+```
+
+Input is a JSON list of parameter objects (`{name, value, unit, comment}`); output is a Fusion 360 add-in script that calls `userParameters.add(...)` for each entry. Names and units are strictly validated and string fields are emitted via `repr()` so the generator is safe against malformed or hostile input.
+
+See the docstring of `generate_fusion360_parameters.py` for the full input schema.

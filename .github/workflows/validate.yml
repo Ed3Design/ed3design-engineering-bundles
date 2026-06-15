@@ -1,0 +1,144 @@
+name: Bundle Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-bundles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python deps used by CI scripts
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pyyaml
+
+      - name: Set up Node + install Claude Code CLI
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install @anthropic-ai/claude-code
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude --version
+          claude plugin validate --help | head -5
+
+      - name: Validate plugin.json schemas
+        run: |
+          set -e
+          for bundle_dir in */; do
+            manifest="${bundle_dir}.claude-plugin/plugin.json"
+            if [ ! -f "$manifest" ]; then
+              echo "skip ${bundle_dir} (no manifest)"
+              continue
+            fi
+            echo "Validating $manifest..."
+            python3 -c "
+          import json, sys
+          m = json.load(open('$manifest'))
+          required = ['name', 'version', 'description', 'license']
+          missing = [k for k in required if k not in m]
+          assert not missing, f'Missing required keys: {missing}'
+          assert m['name'].replace('-', '').replace('_', '').isalnum(), f'Invalid name: {m[\"name\"]}'
+          assert m['version'].count('.') == 2, f'Invalid version (need semver): {m[\"version\"]}'
+          print(f'  ✅ {m[\"name\"]} v{m[\"version\"]}')
+          "
+          done
+
+      - name: Validate skills via official Claude plugin validator (strict)
+        run: |
+          set -e
+          for bundle_dir in */; do
+            [ ! -f "${bundle_dir}.claude-plugin/plugin.json" ] && continue
+            echo "── Validating ${bundle_dir%/} ──"
+            claude plugin validate --strict "${bundle_dir%/}"
+          done
+          echo "  ✅ All bundles pass --strict validation"
+
+      - name: Enforce no DRAFT-banner in production skills
+        run: |
+          set -e
+          for skill_md in */skills/*/SKILL.md; do
+            python3 -c "
+          import re, sys
+          content = open('$skill_md').read()
+          fm_end = content.index('\n---\n', 4)
+          fm = content[4:fm_end]
+          m = re.search(r'^name:\s*(\S+)', fm, re.M)
+          assert m, 'no name in $skill_md'
+          n = m.group(1)
+          assert not (n.endswith('-DRAFT') or n.endswith('-STUB')), f'DRAFT/STUB name suffix in: $skill_md ({n})'
+          "
+          done
+          banner_hits=$(grep -lE '^>?\s*⚠️\s*\*?\*?DRAFT' */skills/*/SKILL.md 2>/dev/null || true)
+          if [ -n "$banner_hits" ]; then
+            echo "FAIL: production skills still carry DRAFT banner:"
+            echo "$banner_hits"
+            exit 1
+          fi
+          echo "  ✅ No DRAFT-banner leakage"
+
+      - name: Skill description audit (first-person HARD-fail, length HARD-fail)
+        run: |
+          set -e
+          python3 scripts/audit-skill-descriptions.py --check
+
+      - name: Validate Python tools syntax
+        run: |
+          set -e
+          for tool_py in */tools/*.py; do
+            [ ! -f "$tool_py" ] && continue
+            python3 -m py_compile "$tool_py" || (echo "FAIL: $tool_py syntax error" && exit 1)
+            test -x "$tool_py" || (echo "FAIL: $tool_py not executable" && exit 1)
+            head -1 "$tool_py" | grep -q "^#!" || (echo "FAIL: $tool_py missing shebang" && exit 1)
+            echo "  ✅ $tool_py"
+          done
+
+      - name: Bundle structure check
+        run: |
+          set -e
+          for bundle_dir in */; do
+            [ ! -f "${bundle_dir}.claude-plugin/plugin.json" ] && continue
+            [ ! -d "${bundle_dir}skills" ] && echo "WARN: ${bundle_dir}skills/ missing"
+            [ ! -f "${bundle_dir}README.md" ] && (echo "FAIL: ${bundle_dir}README.md missing" && exit 1)
+            [ ! -f "${bundle_dir}LICENSE" ] && (echo "FAIL: ${bundle_dir}LICENSE missing" && exit 1)
+            echo "  ✅ ${bundle_dir%/} structure OK"
+          done
+
+      - name: Residue scan (no private paths, hostnames, project-specific identifiers)
+        run: |
+          set -e
+          residue=$(grep -rnE "~/Documents/(Claude-Code|Vault)|/Users/[a-zA-Z]+/|/srv/(projects|backups-staging|docker|data)|swatserver|ultimative-platform|ClaudetteV|Sprint [0-9]+ Item" \
+            --include="*.md" --include="*.py" --include="*.sh" \
+            . 2>/dev/null | grep -v ".git/" | grep -v "TECHNICAL-DEBT.md" || true)
+          if [ -n "$residue" ]; then
+            echo "FAIL: private residue still present:"
+            echo "$residue"
+            exit 1
+          fi
+          echo "  ✅ No residue"
+
+      - name: Summary
+        run: |
+          echo ""
+          echo "=== Bundle Inventory ==="
+          for bundle_dir in */; do
+            [ ! -f "${bundle_dir}.claude-plugin/plugin.json" ] && continue
+            skills=$(ls -1 ${bundle_dir}skills/ 2>/dev/null | wc -l | tr -d ' ')
+            tools=$(ls -1 ${bundle_dir}tools/*.py 2>/dev/null | wc -l | tr -d ' ')
+            echo "  ${bundle_dir%/}: $skills skills, $tools tools"
+          done
