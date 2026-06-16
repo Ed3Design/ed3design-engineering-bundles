@@ -14,7 +14,8 @@ All notable changes to this repository are tracked here. The format follows [Kee
 
 ### Fixed
 
-- 3 cross-references in skill bodies pointed at skills that are not published in any public bundle. `review-qa` (in `cad-construction`) and `ed3dworks-brand` (in `bom-validation-workflow`) were genericized so a public user is not promised an unavailable skill; a "Hardware-stock vault note" reference was genericized to "a hardware-stock inventory"
+- Removed brand-internal content from `bom-validation-workflow` that did not belong in a public skill: a `BOM for ed3Dworks` trigger phrase, a "Brand conformity: ed3Dworks builds need Heat-Orange accent" workflow step, a "brand filament stock / Heat-Orange" anti-pattern, and an `ed3dworks-brand` cross-reference. All were genericized to publisher-neutral wording (required accent color/material conformity). The `ed3Dworks` **author/publisher attribution** in `plugin.json` / `marketplace.json` is retained — that is the marketplace identity, not skill content
+- `review-qa` cross-reference (in `cad-construction`) pointed at a skill not published in any public bundle — genericized to "a dedicated design-review pass"; a "Hardware-stock vault note" reference was genericized to "a hardware-stock inventory"
 - `bom-validation-workflow` origin-narrative referenced a non-existent `bom-validator` skill name — reworded to a neutral design note
 
 ## [0.1.0] — 2026-06-15
