@@ -1,7 +1,7 @@
 ---
 name: bom-validation-workflow
 description: |-
-  Use when validating a Bill of Materials (BOM) for a Maker-3D project — an embedded controller project, a speaker/audio build, a smart-home build, or any other physical build with more than 5 components. Trigger on phrases like "check the BOM", "validate the parts list", "review the parts list", "missing components", "BOM for ed3Dworks", "reconcile parts inventory", "check hardware stock", "what still needs to be ordered", "check BOM against stock", "audio build BOM", "BOM review". Do NOT load for software dependency lists (use package.json/requirements.txt tooling), for pure schematic checks without physical components, or when the project has only 1-2 components (cost/benefit ratio too low). Encodes the end-to-end-builder pattern: before ordering, check against the hardware stock; do not forget connections + consumables.
+  Use when validating a Bill of Materials (BOM) for a Maker-3D project — an embedded controller project, a speaker/audio build, a smart-home build, or any other physical build with more than 5 components. Trigger on phrases like "check the BOM", "validate the parts list", "review the parts list", "missing components", "reconcile parts inventory", "check hardware stock", "what still needs to be ordered", "check BOM against stock", "audio build BOM", "BOM review". Do NOT load for software dependency lists (use package.json/requirements.txt tooling), for pure schematic checks without physical components, or when the project has only 1-2 components (cost/benefit ratio too low). Encodes the end-to-end-builder pattern: before ordering, check against the hardware stock; do not forget connections + consumables.
 ---
 
 # BOM Validation Workflow
@@ -103,7 +103,7 @@ Before order submit, check explicitly:
 3. **Tools?** (crimpers, soldering-iron tips)
 4. **Reserve factor**: critical small parts (LEDs, resistors, microcontrollers) always order +1 or +20% — shipping frustration when one breaks
 5. **Cross-check**: other open projects with similar components? Synergy order possible?
-6. **Brand conformity**: ed3Dworks builds typically need Heat-Orange accent — check filament stock
+6. **Finish/material conformity**: if the project has a required accent color or material spec, check that stock is on hand before ordering the rest
 
 Output: confirmed order list + update suggestion for hardware stock (what will be earmarked WHEN for WHICH project).
 
@@ -115,7 +115,7 @@ Output: confirmed order list + update suggestion for hardware stock (what will b
 - ❌ **One order per source without synergy check**: 4 deliveries instead of 1, €30 shipping burned
 - ❌ **Not updating hardware stock after order**: next session doesn't know what's available
 - ❌ **Ignoring reserve factor on critical parts**: one dead ESP32 without spare = 1 week wait
-- ❌ **Not checking brand filament stock**: Heat-Orange empty, build defaults to standard PLA → brand drift
+- ❌ **Not checking required accent material stock**: the spec'd accent color/material is empty, the build silently defaults to a generic filament → finish drift
 - ❌ **Omitting BOM source evidence**: later it's unclear where which component decision came from
 
 ## Relation to related topics
@@ -123,8 +123,7 @@ Output: confirmed order list + update suggestion for hardware stock (what will b
 - **`mechanical-design-principles`**: defines WHICH components even make sense (standard screws vs. odd sizes, snap-fit vs. screws)
 - **`cad-construction`**: often delivers the spec table from which the BOM is extracted
 - **`design-first-iteration`**: upstream — BOM validation starts only when design is finished
-- **`ed3dworks-brand`**: brand filament stock check + accent color conformity
-- **Hardware-stock vault note**: central source of truth for stock levels
+- **A hardware-stock inventory**: keep a single source of truth for stock levels (a spreadsheet, a notes file, or a small database) and check the BOM against it before ordering
 
 ## Real-world impact (projection)
 
@@ -134,4 +133,4 @@ Output: confirmed order list + update suggestion for hardware stock (what will b
 - **Smart-home variant**: ESP32-P4 + pool sensors + LCD — mix of stock + order
 - **Future smart-home builds**: typical 5-10 components with high connection-part share
 
-**Skill arose from** a discussion of which subagent ideas were worth promoting: of 4 proposed subagents, the `bom-validator` was the only one with a real use case — but as a skill instead of a subagent, because tool-restrict overhead is not needed.
+**Design note**: BOM validation is implemented as a skill rather than a sub-agent — the validation logic needs no tool-restriction overhead, so a skill is the lighter-weight home for it.
