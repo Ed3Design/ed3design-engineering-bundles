@@ -22,7 +22,7 @@ A structured workflow for translating a finalized design into a parametric CAD m
 - Open exploration of design options → `design-first-iteration`
 - General mechanical design rules (overhang, wall thickness, snap-fits) → `mechanical-design-principles`
 - Writing scripts or Python code for CAD automation → `cad-api-scripting`
-- Reviewing an existing CAD model for quality issues → `review-qa` with CAD context
+- Reviewing an existing CAD model for quality issues → use a dedicated design-review pass with CAD context
 
 ## Workflow — 4 phases
 

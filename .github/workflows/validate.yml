@@ -108,6 +108,11 @@ jobs:
             echo "  ✅ $tool_py"
           done
 
+      - name: Behavioral tool smoke-test
+        run: |
+          set -e
+          bash scripts/test-tools-smoke.sh
+
       - name: Bundle structure check
         run: |
           set -e

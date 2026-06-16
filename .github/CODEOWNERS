@@ -1,0 +1,16 @@
+# CODEOWNERS for ed3design-engineering-bundles
+# Format: <path-pattern> <@owner>
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default: any change requires review by repo maintainers
+*                           @Ed3Design
+
+# Per-bundle owners — change as the contributor base grows
+/cad-design/                @Ed3Design
+/maker-fdm/                 @Ed3Design
+/embedded-systems/          @Ed3Design
+
+# CI + security-sensitive scripts: maintainer review required
+/.github/workflows/         @Ed3Design
+/scripts/                   @Ed3Design
+SECURITY.md                 @Ed3Design

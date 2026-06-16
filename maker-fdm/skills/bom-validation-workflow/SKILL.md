@@ -123,8 +123,7 @@ Output: confirmed order list + update suggestion for hardware stock (what will b
 - **`mechanical-design-principles`**: defines WHICH components even make sense (standard screws vs. odd sizes, snap-fit vs. screws)
 - **`cad-construction`**: often delivers the spec table from which the BOM is extracted
 - **`design-first-iteration`**: upstream — BOM validation starts only when design is finished
-- **`ed3dworks-brand`**: brand filament stock check + accent color conformity
-- **Hardware-stock vault note**: central source of truth for stock levels
+- **A hardware-stock inventory**: keep a single source of truth for stock levels (a spreadsheet, a notes file, or a small database) and check the BOM against it before ordering
 
 ## Real-world impact (projection)
 
@@ -134,4 +133,4 @@ Output: confirmed order list + update suggestion for hardware stock (what will b
 - **Smart-home variant**: ESP32-P4 + pool sensors + LCD — mix of stock + order
 - **Future smart-home builds**: typical 5-10 components with high connection-part share
 
-**Skill arose from** a discussion of which subagent ideas were worth promoting: of 4 proposed subagents, the `bom-validator` was the only one with a real use case — but as a skill instead of a subagent, because tool-restrict overhead is not needed.
+**Design note**: BOM validation is implemented as a skill rather than a sub-agent — the validation logic needs no tool-restriction overhead, so a skill is the lighter-weight home for it.
