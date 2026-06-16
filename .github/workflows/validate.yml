@@ -28,7 +28,7 @@ jobs:
           python3 -m pip install pyyaml
 
       - name: Set up Node + install Claude Code CLI
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
       - name: Install @anthropic-ai/claude-code
